@@ -55,5 +55,6 @@ func gen_map():
 						
 						astar.connect_points(get_id(pos),get_id(pos+z))
 
-
+func gen_path(from,to):
+	return astar.get_point_path(get_id(from),get_id(to))
 

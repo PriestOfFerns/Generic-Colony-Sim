@@ -25,7 +25,7 @@ func _physics_process(delta):
 			if (colonist.target):
 				
 				if (colonist.walkProgress<50):
-					colonist.walkProgress+=delta*50
+					colonist.walkProgress+=delta*200
 					
 
 					colonist.position = colonist.was.lerp(colonist.target,colonist.walkProgress/50)
@@ -40,8 +40,13 @@ func _physics_process(delta):
 				if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
 				var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
 				if result:
-					colonist.target = Vector2(result.x*32+16,result.y*32+16)
-					colonist.was = colonist.position
+					var path = pathFinder.gen_path(tileMaster.to_tile(colonist.position),result)
+					if (path and len(path)>1):
+						
+						colonist.target = Vector2(path[1].x*32+16,path[1].y*32+16)
+						colonist.was = colonist.position
+					else:
+						colonist.job=null
 				else:
 					colonist.job = null
 	
