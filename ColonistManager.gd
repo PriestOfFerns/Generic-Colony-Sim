@@ -45,6 +45,11 @@ func _physics_process(delta):
 						
 						colonist.target = Vector2(path[1].x*32+16,path[1].y*32+16)
 						colonist.was = colonist.position
+						
+						if (colonist.target.x<colonist.was.x):
+							colonist.flip_h = true
+						else:
+							colonist.flip_h = false
 					else:
 						colonist.job=null
 				else:
