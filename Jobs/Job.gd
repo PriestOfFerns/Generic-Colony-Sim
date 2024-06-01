@@ -4,5 +4,5 @@ var type = ""
 
 var target
 
-func tick(colonist, reached):
+func tick(colonist, reached, pathfinder, tilemaster):
 	pass

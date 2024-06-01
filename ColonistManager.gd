@@ -4,7 +4,10 @@ extends Node
 var baseColonist = $"LittleGuy"
 @onready
 var colonistHolder = $"Colonists"
-
+@onready
+var tileMaster = $"%TileMaster"
+@onready
+var pathFinder = $"%Pathfinder"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,8 +22,13 @@ func _physics_process(delta):
 			var wander = WanderJob.new()
 			colonist.job = wander
 		else:
-			if (colonist.job.target == null or colonist.)
-			colonist.job.tick(colonist, false)
+			var reached = false
+			if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
+			var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
+			if result:
+				colonist.set_global_position(Vector2(result.x*32+16,result.y*32+16)) 
+			else:
+				colonist.job = null
 	
 
 
