@@ -7,6 +7,7 @@ var walkProgress = 0.00
 var was
 var target
 var job
+var path
 
 
 # Called when the node enters the scene tree for the first time.

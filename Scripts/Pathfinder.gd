@@ -10,6 +10,8 @@ var sizeX = 0
 @export
 var sizeY = 0
 
+var update = 0
+
 var do_update = false
 
 var astar = AStar2D.new()
@@ -38,6 +40,7 @@ func get_pos(id):
 	return Vector2i(id%sizeX,id/sizeX)
 
 func gen_map():
+	update+=1
 	astar.clear()
 	for y in range(sizeY):
 		for x in range(sizeX):

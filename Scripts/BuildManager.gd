@@ -7,9 +7,9 @@ var tileMaster = $"%TileMaster"
 
 
 func _ready():
-	for x in range(10):
+	for x in range(3):
 		createBuild(WallBuild,Vector2i(5,x))
-		createBuild(WallBuild,Vector2i(7,x))
+
 	pass # Replace with function body.
 
 

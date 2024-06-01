@@ -9,59 +9,73 @@ var tileMaster = $"%TileMaster"
 @onready
 var pathFinder = $"%Pathfinder"
 @onready
-var builds = $"%BuildManager/Builds"
+var buildingHolder = $"%BuildManager/Builds"
 
 
 func _ready():
 	make_colonist("Dave",Vector2(16,16))
 
+var update = 0
 
+
+
+func shouldBuild(colonist):
+	var jobs = []
+	for building in buildingHolder.get_children():
+		if (building.built == false and building.inProcess == false):
+			var tempJob = BuildJob.new()
+			tempJob.building = building
+			tempJob.genPath(colonist,pathFinder,tileMaster)
+			jobs.append(tempJob)
+	var min_path = 9223372036854775807
+	var finalJob
+	for job in jobs:
+		if len(job.path) > 0 and len(job.path)<min_path:
+			finalJob = job
+			min_path = len(job.path)
+	if (finalJob):
+		colonist.job=finalJob
+		return true
+	return false
+	
+func shouldWander(colonist):
+	var job = WanderJob.new()
+	var try = job.genPath(colonist,pathFinder,tileMaster)
+	if (try):
+		colonist.job = job
+		return true
+	return false
+		
 func _physics_process(delta):
 	for colonist in colonistHolder.get_children():
-		
-		if (colonist.job==null):
-			for build in builds.get_children():
-				if build.inProcess == false and build.built == false:
-					var buildJ = BuildJob.new()
-					buildJ.building = build
-					colonist.job = buildJ
-					return
+		if colonist.walkProgress != 0:
+			lerpColonist(colonist,colonist.target,delta)
+		else:
+			var not_stuck = true
+			if shouldBuild(colonist): pass
+			elif shouldWander(colonist): pass
+			else: not_stuck = false
 			
-			var wander = WanderJob.new()
-			colonist.job = wander
-			
-			
-		else:	
-			if (colonist.target):
-				if (colonist.walkProgress<50):
-					colonist.walkProgress+=delta*200
-					colonist.position = colonist.was.lerp(colonist.target,colonist.walkProgress/50)			
-				else:
-					colonist.target = null
-					colonist.was = null
-					colonist.walkProgress=0
-			else:
-				
-				var reached = false
-				if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
-				
-				var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
-				if result:
-					var path = pathFinder.gen_path(tileMaster.to_tile(colonist.position),result)
-					if (path and len(path)>1):
-						
-						colonist.target = Vector2(path[1].x*32+16,path[1].y*32+16)
-						colonist.was = colonist.position
-						
-						if (colonist.target.x<colonist.was.x):
-							colonist.flip_h = true
-						else:
-							colonist.flip_h = false
-					
-				else:
+			if not_stuck:
+				var response = colonist.job.tick(colonist,hasReached(colonist),pathFinder,tileMaster)
+				if response[0]=="done":
 					colonist.job = null
-	
+				elif response[0]=="goto":
+					var goto = Vector2(response[1].x*32+16,response[1].y*32+16)
+					colonist.target = goto
+					colonist.was = colonist.position
+					colonist.walkProgress = 1
+				
+			
+		
+func hasReached(colonist):
+	return colonist.job.target==tileMaster.to_tile(colonist.position)
 
+func lerpColonist(colonist, toBe,t):
+	colonist.walkProgress+=300*t
+	colonist.position = colonist.was.lerp(toBe,colonist.walkProgress/50)
+	if colonist.walkProgress >= 50:
+		colonist.walkProgress = 0.00
 
 
 func get_id():
