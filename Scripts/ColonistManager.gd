@@ -8,28 +8,34 @@ var colonistHolder = $"Colonists"
 var tileMaster = $"%TileMaster"
 @onready
 var pathFinder = $"%Pathfinder"
+@onready
+var builds = $"%BuildManager/Builds"
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	make_colonist("Dave",Vector2(16,16))
-	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	for colonist in colonistHolder.get_children():
+		
 		if (colonist.job==null):
+			for build in builds.get_children():
+				if build.inProcess == false and build.built == false:
+					var buildJ = BuildJob.new()
+					buildJ.building = build
+					colonist.job = buildJ
+					return
+			
 			var wander = WanderJob.new()
 			colonist.job = wander
-		else:
+			
+			
+		else:	
 			if (colonist.target):
-				
 				if (colonist.walkProgress<50):
 					colonist.walkProgress+=delta*200
-					
-
-					colonist.position = colonist.was.lerp(colonist.target,colonist.walkProgress/50)
-					
+					colonist.position = colonist.was.lerp(colonist.target,colonist.walkProgress/50)			
 				else:
 					colonist.target = null
 					colonist.was = null
@@ -38,6 +44,7 @@ func _physics_process(delta):
 				
 				var reached = false
 				if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
+				
 				var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
 				if result:
 					var path = pathFinder.gen_path(tileMaster.to_tile(colonist.position),result)
@@ -50,8 +57,7 @@ func _physics_process(delta):
 							colonist.flip_h = true
 						else:
 							colonist.flip_h = false
-					else:
-						colonist.job=null
+					
 				else:
 					colonist.job = null
 	

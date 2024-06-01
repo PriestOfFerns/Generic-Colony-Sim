@@ -1,9 +1,10 @@
 class_name WanderJob extends Job
 
 
-
 var rng = RandomNumberGenerator.new()
 
+func _init():
+	type="Wander"
 
 func tick(colonist, reached, pathfinder, tilemaster):
 	if target == null:
