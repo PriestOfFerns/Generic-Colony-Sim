@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1j3hih278tby"
-path="res://.godot/imported/Little guy.png-395bd2e4d1723383d46e0dad1332a1a4.ctex"
+uid="uid://cm8jpwvb7ebnj"
+path="res://.godot/imported/tileset.png-06023f60f54ec986b75003a8d422612f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Little guy.png"
-dest_files=["res://.godot/imported/Little guy.png-395bd2e4d1723383d46e0dad1332a1a4.ctex"]
+source_file="res://Assets/tileset.png"
+dest_files=["res://.godot/imported/tileset.png-06023f60f54ec986b75003a8d422612f.ctex"]
 
 [params]
 

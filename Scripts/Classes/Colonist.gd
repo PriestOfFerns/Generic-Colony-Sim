@@ -1,8 +1,12 @@
-extends Node2D
+extends Entity
 
-var health = 0
-var maxHealth = 0
-var Armor = 0
+
+var colonist_name = ""
+var walkProgress = 0.00
+
+var was
+var target
+var job
 
 
 # Called when the node enters the scene tree for the first time.

@@ -1,12 +1,8 @@
-extends "res://Entity.gd"
+class_name Entity extends Node2D
 
-
-var colonist_name = ""
-var walkProgress = 0.00
-
-var was
-var target
-var job
+var health = 0
+var maxHealth = 0
+var Armor = 0
 
 
 # Called when the node enters the scene tree for the first time.

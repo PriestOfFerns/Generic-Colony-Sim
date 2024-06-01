@@ -1,14 +1,14 @@
 [gd_scene load_steps=9 format=3 uid="uid://bdg3f7kh2y13"]
 
-[ext_resource type="Script" path="res://TileMaster.gd" id="1_4kxs3"]
-[ext_resource type="Texture2D" uid="uid://cm8jpwvb7ebnj" path="res://tileset.png" id="2_wqf01"]
-[ext_resource type="Script" path="res://Pathfinder.gd" id="3_ssslm"]
-[ext_resource type="Script" path="res://ColonistManager.gd" id="4_t0wyt"]
-[ext_resource type="Texture2D" uid="uid://c1j3hih278tby" path="res://Little guy.png" id="5_ptalg"]
-[ext_resource type="Script" path="res://Colonist.gd" id="6_5tbrj"]
+[ext_resource type="Script" path="res://Scripts/TileMaster.gd" id="1_s8kk2"]
+[ext_resource type="Texture2D" uid="uid://cm8jpwvb7ebnj" path="res://Assets/tileset.png" id="2_w8wxa"]
+[ext_resource type="Script" path="res://Scripts/Pathfinder.gd" id="3_xqk8w"]
+[ext_resource type="Script" path="res://Scripts/ColonistManager.gd" id="4_dqrtd"]
+[ext_resource type="Texture2D" uid="uid://c1j3hih278tby" path="res://Assets/Little guy.png" id="5_k0j2b"]
+[ext_resource type="Script" path="res://Scripts/Classes/Colonist.gd" id="6_g4kj6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dqpow"]
-texture = ExtResource("2_wqf01")
+texture = ExtResource("2_w8wxa")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/custom_data_0 = 100
@@ -106,7 +106,7 @@ sources/0 = SubResource("TileSetAtlasSource_dqpow")
 
 [node name="TileMaster" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("1_4kxs3")
+script = ExtResource("1_s8kk2")
 
 [node name="TileMap" type="TileMap" parent="TileMaster"]
 tile_set = SubResource("TileSet_u8tun")
@@ -116,18 +116,18 @@ layer_0/tile_data = PackedInt32Array(262150, 0, 0, 327686, 0, 0, 327687, 0, 0, 3
 
 [node name="Pathfinder" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_ssslm")
+script = ExtResource("3_xqk8w")
 sizeX = 500
 sizeY = 500
 
 [node name="ColonistManager" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("4_t0wyt")
+script = ExtResource("4_dqrtd")
 
 [node name="LittleGuy" type="Sprite2D" parent="ColonistManager"]
 position = Vector2(-99999, -99999)
-texture = ExtResource("5_ptalg")
-script = ExtResource("6_5tbrj")
+texture = ExtResource("5_k0j2b")
+script = ExtResource("6_g4kj6")
 
 [node name="Colonists" type="Node" parent="ColonistManager"]
 
