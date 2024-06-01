@@ -35,8 +35,11 @@ func tick(colonist, reached, pathfinder, tilemaster):
 		if (building.buildProgress>=building.buildNeeded):
 			building.on_build(tilemaster)
 			building.built=true
-			pathfinder.gen_map()
+			#pathfinder.gen_map()
 			return ["done"]
-		building.buildProgress+=20
+		building.buildProgress+=5
 	else: return ["goto",path[1]]
 	return ["wait"]
+	
+	
+	

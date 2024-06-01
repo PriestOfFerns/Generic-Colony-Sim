@@ -13,7 +13,8 @@ func genPath(colonist, pathfinder, tilemaster):
 	
 	while !pathfinder.is_valid(target) or len(path) == 0:
 		target = tilemaster.to_tile(colonist.position)+Vector2i(rng.randi_range(-3,3),rng.randi_range(-3,3))			
-		path = pathfinder.gen_path(tilemaster.to_tile(colonist.position),target)
+		if pathfinder.is_valid(target):
+			path = pathfinder.gen_path(tilemaster.to_tile(colonist.position),target)
 		try+=1
 		if try > 20:
 			return false

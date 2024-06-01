@@ -14,6 +14,10 @@ var buildingHolder = $"%BuildManager/Builds"
 
 func _ready():
 	make_colonist("Dave",Vector2(16,16))
+	make_colonist("Gave",Vector2(16,16))
+	make_colonist("Lave",Vector2(16,16))
+	make_colonist("Nave",Vector2(16,16))
+	make_colonist("Bave",Vector2(16,16))
 
 var update = 0
 
@@ -34,6 +38,7 @@ func shouldBuild(colonist):
 			finalJob = job
 			min_path = len(job.path)
 	if (finalJob):
+		finalJob.building.inProcess = true
 		colonist.job=finalJob
 		return true
 	return false
@@ -46,7 +51,14 @@ func shouldWander(colonist):
 		return true
 	return false
 		
+	
+func deprocessBuildings():
+	for building in buildingHolder.get_children():
+		building.inProcess = false
+		
 func _physics_process(delta):
+	deprocessBuildings()
+	
 	for colonist in colonistHolder.get_children():
 		if colonist.walkProgress != 0:
 			lerpColonist(colonist,colonist.target,delta)
@@ -72,7 +84,7 @@ func hasReached(colonist):
 	return colonist.job.target==tileMaster.to_tile(colonist.position)
 
 func lerpColonist(colonist, toBe,t):
-	colonist.walkProgress+=300*t
+	colonist.walkProgress+=200*t
 	colonist.position = colonist.was.lerp(toBe,colonist.walkProgress/50)
 	if colonist.walkProgress >= 50:
 		colonist.walkProgress = 0.00

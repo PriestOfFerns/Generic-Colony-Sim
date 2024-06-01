@@ -141,4 +141,4 @@ script = ExtResource("7_st7rc")
 [node name="Builds" type="Node" parent="BuildManager"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(238, 137)
+position = Vector2(576, 325)
