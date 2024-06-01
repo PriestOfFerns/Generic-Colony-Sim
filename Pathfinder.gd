@@ -17,10 +17,6 @@ var astar = AStar2D.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gen_map()
-	
-
-	for x in astar.get_id_path(0,get_id(Vector2i(7,4))):
-		print(get_pos(x))
 
 	
 

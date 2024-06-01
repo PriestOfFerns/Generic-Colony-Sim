@@ -22,13 +22,28 @@ func _physics_process(delta):
 			var wander = WanderJob.new()
 			colonist.job = wander
 		else:
-			var reached = false
-			if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
-			var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
-			if result:
-				colonist.set_global_position(Vector2(result.x*32+16,result.y*32+16)) 
+			if (colonist.target):
+				
+				if (colonist.walkProgress<50):
+					colonist.walkProgress+=delta*50
+					
+
+					colonist.position = colonist.was.lerp(colonist.target,colonist.walkProgress/50)
+					
+				else:
+					colonist.target = null
+					colonist.was = null
+					colonist.walkProgress=0
 			else:
-				colonist.job = null
+				
+				var reached = false
+				if (colonist.job.target != null and tileMaster.to_tile(colonist.position) == colonist.job.target): reached = true
+				var result = colonist.job.tick(colonist, reached,pathFinder,tileMaster)
+				if result:
+					colonist.target = Vector2(result.x*32+16,result.y*32+16)
+					colonist.was = colonist.position
+				else:
+					colonist.job = null
 	
 
 

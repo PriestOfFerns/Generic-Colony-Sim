@@ -132,5 +132,4 @@ script = ExtResource("6_5tbrj")
 [node name="Colonists" type="Node" parent="ColonistManager"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(759, 568)
-zoom = Vector2(0.55, 0.55)
+position = Vector2(238, 137)
